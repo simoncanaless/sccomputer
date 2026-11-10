@@ -6,6 +6,8 @@
 <title>SC Computer — Agenda tu mantención</title>
 <meta name="description" content="Agenda la mantención de tu PC, notebook o consola: selecciona tus equipos, la fecha y la modalidad de entrega. La reserva se confirma por WhatsApp.">
 <meta name="theme-color" content="#1E4FD8">
+<!-- config.js va en el head para que el formulario ya esté armado al pintar la página (sin saltos de contenido) -->
+<script src="config.js"></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='10' fill='%231E4FD8'/%3E%3Cg transform='translate(8 8) scale(.8333)' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='16' height='16' rx='2'/%3E%3Crect x='9' y='9' width='6' height='6'/%3E%3Cpath d='M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,6 +39,7 @@ a { color: var(--acento); }
 a:hover { color: var(--acento-osc); }
 input, textarea, button { font-family: inherit; }
 button { color: var(--texto); -webkit-tap-highlight-color: transparent; }
+a, button { touch-action: manipulation; }   /* toques seguidos en −/+ sin zoom por doble toque */
 input:focus, textarea:focus, button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px solid #9DB6F5; outline-offset: 2px; }
 h1, h2, h3 { font-family: var(--titulos); }
 svg { flex: none; }
@@ -207,16 +210,23 @@ textarea.input { height: auto; padding: 12px 14px; line-height: 1.5; resize: ver
 .btn-volver { margin-top: 18px; min-height: 44px; padding: 0; border: none; background: none; color: var(--acento); font-weight: 600; font-size: 15px; cursor: pointer; }
 .btn-volver:hover { color: var(--acento-osc); }
 
+/* Una sola columna (tablet y celular): el resumen baja al final, así que el total y el botón van en la barra fija */
+@media (max-width: 951px) {
+  .resumen { position: static; }
+  .main-form { padding-bottom: 128px; }
+  .barra-movil { display: flex; }
+}
+@media (max-width: 820px) {
+  .solo-desk { display: none; }
+}
 @media (max-width: 640px) {
   .t-h1 { font-size: 34px; line-height: 1.12; }
   .hero-m { padding: 28px 20px 12px; }
-  .solo-desk { display: none; }
   .header-in { padding: 12px 16px; gap: 10px; flex-wrap: nowrap; }
   .header-der { gap: 8px; flex-wrap: nowrap; }
   .card, .card-conf { padding: 18px; }
   .traslado { padding: 16px; }
   .cal { padding: 10px; }
-  .resumen { position: static; }
   .main-form { padding: 8px 16px 128px; }
   .main-conf { padding: 8px 16px 48px; }
   /* En celular, la pantalla de pago parte directo en "Completa tu reserva" (sin repetir el hero) */
@@ -375,7 +385,6 @@ textarea.input { height: auto; padding: 12px 14px; line-height: 1.5; resize: ver
 <!-- Pantalla 2: confirmación y pago -->
 <main class="main-conf" id="vista-conf" hidden></main>
 
-<script src="config.js"></script>
 <script>
 (function () {
   'use strict';
@@ -582,14 +591,23 @@ textarea.input { height: auto; padding: 12px 14px; line-height: 1.5; resize: ver
   }
 
   // ── Render: 2. Calendario y horas ───────────────────────────
+  // Meses navegables: del primer al último mes que tiene algún día disponible
+  // (así el calendario nunca abre ni termina en un mes vacío).
+  function limitesMes(dias) {
+    var keys = Object.keys(dias).sort();
+    if (!keys.length) return [0, maxOffset];
+    var off = function (f) { return (f.getFullYear() - inicio.getFullYear()) * 12 + f.getMonth() - inicio.getMonth(); };
+    return [off(dias[keys[0]].fecha), off(dias[keys[keys.length - 1]].fecha)];
+  }
   function renderCalendario(r) {
-    var offset = Math.max(0, Math.min(maxOffset, state.mesOffset));
+    var lim = limitesMes(r.dias);
+    var offset = Math.max(lim[0], Math.min(lim[1], state.mesOffset));
     state.mesOffset = offset;
     var primero = new Date(inicio.getFullYear(), inicio.getMonth() + offset, 1, 12);
     var nombreMes = MESES[primero.getMonth()];
     $('cal-mes').textContent = nombreMes.charAt(0).toUpperCase() + nombreMes.slice(1) + ' ' + primero.getFullYear();
-    $('mes-prev').disabled = offset <= 0;
-    $('mes-next').disabled = offset >= maxOffset;
+    $('mes-prev').disabled = offset <= lim[0];
+    $('mes-next').disabled = offset >= lim[1];
 
     var html = '';
     var lead = (primero.getDay() + 6) % 7;                // la semana parte en lunes

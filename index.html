@@ -6,6 +6,8 @@
 <title>SC Computer — Mantención de PC, notebooks y consolas</title>
 <meta name="description" content="Mantención preventiva de computadores y consolas en La Cruz, Quillota, Viña del Mar, Concón y Quilpué: limpieza interna profunda y cambio de pasta térmica, con retiro y entrega a domicilio.">
 <meta name="theme-color" content="#1E4FD8">
+<!-- config.js va en el head para que los precios ya estén al pintar la página (sin saltos de contenido) -->
+<script src="config.js"></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='10' fill='%231E4FD8'/%3E%3Cg transform='translate(8 8) scale(.8333)' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='16' height='16' rx='2'/%3E%3Crect x='9' y='9' width='6' height='6'/%3E%3Cpath d='M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,6 +37,7 @@ body {
 a { color: var(--acento); }
 a:hover { color: var(--acento-osc); }
 a:focus-visible, button:focus-visible { outline: 3px solid #9DB6F5; outline-offset: 2px; }
+a, button { touch-action: manipulation; }   /* sin espera ni zoom por doble toque en celular */
 h1, h2, h3 { font-family: var(--titulos); }
 svg { flex: none; }
 
@@ -155,8 +158,10 @@ svg { flex: none; }
   .hero-botones .btn { flex: 1 1 auto; }
   .footer-in { padding: 20px; }
 }
-@media (max-width: 480px) {
-  /* En pantallas angostas el pill de Instagram queda solo con el ícono para que el header no se parta en dos líneas */
+@media (max-width: 860px) and (min-width: 641px), (max-width: 480px) {
+  /* Donde no cabe todo (tablet con el menú visible, o celular angosto) el pill de Instagram
+     queda solo con el ícono para que el header no se parta en dos líneas */
+  .nav { gap: 4px; }
   .pill-ig { padding: 0; }
   .pill-ig .ig-txt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }
@@ -389,7 +394,6 @@ svg { flex: none; }
   </div>
 </footer>
 
-<script src="config.js"></script>
 <script>
 (function () {
   'use strict';
