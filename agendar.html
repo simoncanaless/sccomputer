@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SC Computer — Agenda tu mantención</title>
+<meta name="description" content="Agenda la mantención de tu PC, notebook o consola: selecciona tus equipos, la fecha y la modalidad de entrega. La reserva se confirma por WhatsApp.">
+<meta name="theme-color" content="#1E4FD8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='10' fill='%231E4FD8'/%3E%3Cg transform='translate(8 8) scale(.8333)' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='16' height='16' rx='2'/%3E%3Crect x='9' y='9' width='6' height='6'/%3E%3Cpath d='M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+:root {
+  --acento: #1E4FD8;
+  --acento-osc: #163CA6;
+  --acento-suave: #EEF3FF;
+  --texto: #14171C;
+  --texto-2: #4A5260;
+  --borde: #E3E6EB;
+  --borde-input: #CDD3DC;
+  --fondo: #F5F6F8;
+  --titulos: 'Space Grotesk', Inter, system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: Inter, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+[hidden] { display: none !important; }
+a { color: var(--acento); }
+a:hover { color: var(--acento-osc); }
+input, textarea, button { font-family: inherit; }
+button { color: var(--texto); -webkit-tap-highlight-color: transparent; }
+input:focus, textarea:focus, button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px solid #9DB6F5; outline-offset: 2px; }
+h1, h2, h3 { font-family: var(--titulos); }
+svg { flex: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.cont { max-width: 1160px; margin: 0 auto; }
+
+/* Header */
+.header { background: #FFFFFF; border-bottom: 1px solid var(--borde); }
+.header-in { padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.marca { display: flex; align-items: center; gap: 10px; color: var(--texto); text-decoration: none; }
+.marca:hover { color: var(--texto); }
+.marca-logo { width: 36px; height: 36px; border-radius: 10px; background: var(--acento); display: flex; align-items: center; justify-content: center; }
+.marca-nombre { font-family: var(--titulos); font-weight: 700; font-size: 18px; white-space: nowrap; }
+.header-der { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.link-inicio { display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px; color: var(--texto); text-decoration: none; font-size: 15px; font-weight: 600; white-space: nowrap; }
+.link-inicio:hover { color: var(--acento); }
+.header-zona { font-size: 14px; color: var(--texto-2); }
+.pill-ig { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; min-width: 44px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--borde); color: var(--texto); text-decoration: none; font-size: 14px; font-weight: 600; }
+.pill-ig:hover { color: var(--texto); border-color: var(--borde-input); }
+
+/* Hero */
+.hero-m { padding: 48px 24px 24px; }
+.t-h1 { margin: 0; font-size: 44px; line-height: 1.1; font-weight: 700; max-width: 760px; }
+.hero-bajada { margin: 16px 0 0; font-size: 18px; line-height: 1.55; color: var(--texto-2); max-width: 680px; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.chip { padding: 8px 14px; border-radius: 999px; background: #FFFFFF; border: 1px solid var(--borde); font-size: 14px; font-weight: 500; }
+
+/* Layout del formulario */
+.main-form { padding: 8px 24px 64px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+.col-form { flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+.resumen { flex: 1 1 320px; min-width: 0; position: sticky; top: 24px; }
+.card { background: #FFFFFF; border: 1px solid var(--borde); border-radius: 16px; padding: 24px; }
+.card h2 { margin: 0 0 4px; font-size: 22px; line-height: 1.2; }
+.card-bajada { margin: 0 0 16px; color: var(--texto-2); font-size: 15px; line-height: 1.5; }
+.sub-tit { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+.aviso-info { font-size: 14px; line-height: 1.5; color: var(--texto); background: var(--acento-suave); border-radius: 8px; padding: 10px 12px; }
+.aviso-cotizar { font-size: 14px; line-height: 1.5; color: #8A4B08; background: #FFF4E5; border-radius: 8px; padding: 10px 12px; }
+
+/* Selección: mismo grosor de borde en ambos estados para que no salte el layout */
+.opcion { border: 2px solid var(--borde); background: #FFFFFF; color: var(--texto); cursor: pointer; }
+.opcion:hover { border-color: #B9C7EE; }
+.opcion.on { border-color: var(--acento); background: var(--acento-suave); }
+
+/* 1. Equipos */
+.grupos { display: flex; flex-direction: column; gap: 24px; }
+.grupo-tit { font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--texto-2); margin-bottom: 10px; }
+.equipos { display: flex; flex-direction: column; gap: 12px; }
+.equipo { border-radius: 12px; border: 2px solid var(--borde); background: #FFFFFF; }
+.equipo.on { border-color: var(--acento); background: #F7F9FF; }
+.equipo-fila { display: flex; align-items: center; gap: 12px 16px; padding: 14px 16px; flex-wrap: wrap; }
+.equipo-ic { width: 44px; height: 44px; flex: none; border-radius: 10px; background: #EEF1F5; display: flex; align-items: center; justify-content: center; }
+.equipo-txt { flex: 1 1 150px; min-width: 0; }
+.equipo-nombre { font-weight: 600; font-size: 16px; }
+.equipo-desc { font-size: 14px; line-height: 1.4; color: var(--texto-2); margin-top: 2px; }
+.equipo-desc strong { color: var(--texto); }
+.contador { display: flex; align-items: center; gap: 8px; flex: none; margin-left: auto; }
+.btn-cnt { width: 44px; height: 44px; padding: 0; border-radius: 10px; border: 1px solid var(--borde-input); background: #FFFFFF; font-size: 22px; line-height: 1; cursor: pointer; color: var(--texto); }
+.btn-cnt.mas { border-color: var(--acento); background: var(--acento); color: #FFFFFF; }
+.btn-cnt[aria-disabled="true"] { opacity: 0.4; cursor: default; }
+.cnt-num { min-width: 24px; text-align: center; font-weight: 700; font-size: 18px; }
+.gpu { margin: 0 16px 16px; padding: 14px 16px; border-radius: 10px; background: #FFFFFF; border: 1px dashed #B9C3D3; display: flex; align-items: center; gap: 12px 16px; flex-wrap: wrap; }
+.gpu-txt { flex: 1 1 220px; min-width: 0; }
+.gpu-tit { font-weight: 600; font-size: 15px; }
+.gpu-desc { font-size: 13px; line-height: 1.45; color: var(--texto-2); margin-top: 2px; }
+.gpu-desc strong { color: var(--texto); }
+
+/* 2. Calendario */
+.cal { border: 1px solid var(--borde); border-radius: 14px; padding: 14px; max-width: 460px; }
+.cal-cab { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.cal-nav { width: 44px; height: 44px; padding: 0; border-radius: 10px; border: 1px solid var(--borde); background: #FFFFFF; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.cal-nav:disabled { opacity: 0.35; cursor: default; }
+.cal-mes { font-family: var(--titulos); font-weight: 700; font-size: 18px; }
+.cal-ini, .cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.cal-ini { text-align: center; font-size: 12px; font-weight: 600; color: var(--texto-2); margin-bottom: 4px; }
+.cal-dia { height: 44px; padding: 0; border-radius: 10px; cursor: pointer; font-size: 15px; font-weight: 700; border: 2px solid #B9C7EE; background: #FFFFFF; color: var(--texto); }
+.cal-dia:hover { border-color: var(--acento); }
+.cal-dia.on { border-color: var(--acento); background: var(--acento); color: #FFFFFF; }
+.cal-no { height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; color: #A3AAB5; }
+.cal-no.pasado { text-decoration: line-through; }
+.cal-vacia { height: 44px; }
+.cal-leyenda { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px; font-size: 12px; color: var(--texto-2); }
+.cal-leyenda span { display: inline-flex; align-items: center; gap: 6px; }
+.cal-leyenda i { width: 12px; height: 12px; border-radius: 4px; }
+.ley-disp { border: 2px solid #B9C7EE; background: #FFFFFF; }
+.ley-sel { background: var(--acento); }
+.ley-no { background: #EEF0F3; }
+.horas-tit { font-weight: 600; font-size: 15px; margin-top: 16px; }
+.horas-ayuda { font-size: 14px; color: var(--texto-2); margin-top: 16px; }
+.horas { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.hora { min-width: 88px; min-height: 44px; padding: 10px 16px; border-radius: 999px; font-weight: 600; font-size: 15px; }
+
+/* 3. Retiro y entrega */
+.opciones { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr)); gap: 10px; }
+.opcion-modo { text-align: left; padding: 14px 16px; border-radius: 12px; }
+.opcion-nombre { display: block; font-weight: 600; font-size: 15px; }
+.opcion-nota { display: block; font-size: 13px; line-height: 1.4; margin-top: 4px; color: var(--texto-2); }
+.traslado { margin-top: 20px; padding: 20px; border-radius: 12px; background: #F5F7FB; border: 1px solid var(--borde); }
+.comunas { display: flex; flex-wrap: wrap; gap: 8px; }
+.comuna { min-height: 44px; padding: 8px 14px; border-radius: 10px; text-align: left; }
+.comuna-nombre { display: block; font-weight: 600; font-size: 14px; }
+.comuna-tarifa { display: block; font-size: 12px; color: var(--texto-2); }
+.traslado-nota { margin: 12px 0 0; font-size: 13px; color: var(--texto-2); line-height: 1.5; }
+
+/* 4 y 5. Campos */
+.campos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 16px; }
+.label { display: block; font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+.input { width: 100%; height: 48px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--borde-input); font-size: 16px; background: #FFFFFF; color: var(--texto); }
+textarea.input { height: auto; padding: 12px 14px; line-height: 1.5; resize: vertical; display: block; }
+.input::placeholder { color: #6B7381; }
+.opcional { font-family: Inter, system-ui, sans-serif; font-weight: 400; font-size: 16px; color: var(--texto-2); }
+
+/* Resumen */
+.resumen h2 { margin: 0 0 16px; font-size: 20px; }
+.lineas { display: flex; flex-direction: column; gap: 10px; }
+.linea { display: flex; justify-content: space-between; gap: 12px; font-size: 15px; line-height: 1.4; }
+.linea > div:first-child { min-width: 0; }
+.linea-sub { font-size: 13px; color: var(--texto-2); }
+.linea-monto { font-weight: 600; white-space: nowrap; }
+.resumen-vacio { margin: 0; color: var(--texto-2); font-size: 15px; }
+.total { border-top: 1px solid var(--borde); margin: 16px 0; padding-top: 16px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.total-label { font-weight: 600; font-size: 16px; }
+.total-monto { font-family: var(--titulos); font-weight: 700; font-size: 28px; }
+.resumen-fecha { font-size: 14px; color: var(--texto-2); margin-bottom: 16px; }
+.resumen-fecha strong { color: var(--texto); }
+.resumen .aviso-cotizar { font-size: 13px; margin-bottom: 16px; }
+.btn-agendar { width: 100%; min-height: 52px; border-radius: 12px; border: none; background: var(--acento); color: #FFFFFF; font-weight: 700; font-size: 16px; cursor: pointer; }
+.btn-agendar:hover { background: var(--acento-osc); }
+.btn-agendar:disabled { background: var(--borde); color: var(--texto-2); cursor: default; }
+.falta { font-size: 13px; color: var(--texto-2); margin-top: 10px; line-height: 1.45; }
+.pago-nota { margin: 16px 0 0; font-size: 13px; color: var(--texto-2); line-height: 1.5; }
+
+/* Barra fija inferior (solo celular) */
+.barra-movil { display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: #FFFFFF; border-top: 1px solid var(--borde); padding: 12px 16px; gap: 12px; align-items: center; box-shadow: 0 -4px 16px rgba(20, 23, 28, 0.08); }
+.barra-txt { flex: 1 1 auto; min-width: 0; }
+.barra-label { font-size: 12px; color: var(--texto-2); }
+.barra-total { font-family: var(--titulos); font-weight: 700; font-size: 22px; line-height: 1.2; }
+.barra-falta { font-size: 12px; color: var(--texto-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.barra-movil .btn-agendar { flex: none; width: auto; min-height: 48px; padding: 0 24px; }
+
+/* Confirmación */
+.main-conf { max-width: 760px; margin: 0 auto; padding: 8px 24px 64px; display: flex; flex-direction: column; gap: 20px; }
+.card-conf { padding: 28px; }
+.conf-cab { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.conf-check { width: 40px; height: 40px; border-radius: 999px; background: #E7F6EC; display: flex; align-items: center; justify-content: center; flex: none; }
+.conf-cab h2 { margin: 0; font-size: 26px; }
+.conf-bajada { margin: 0 0 24px; color: var(--texto-2); font-size: 16px; line-height: 1.55; }
+.conf-bajada strong { color: var(--texto); }
+.conf-paso { display: flex; gap: 14px; align-items: flex-start; }
+.conf-paso + .conf-paso { margin-top: 28px; }
+.conf-num { width: 28px; height: 28px; border-radius: 999px; background: var(--acento); color: #FFFFFF; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; flex: none; }
+.conf-cuerpo { flex: 1 1 auto; min-width: 0; }
+.conf-tit { font-weight: 600; font-size: 17px; line-height: 1.5; margin: 0; font-family: Inter, system-ui, sans-serif; }
+.conf-sub { font-size: 14px; line-height: 1.5; color: var(--texto-2); margin-top: 2px; }
+.banco { margin: 14px 0 0; border: 1px solid var(--borde); border-radius: 12px; background: #F7F8FA; padding: 16px; display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: 16px; row-gap: 8px; font-size: 15px; line-height: 1.4; }
+.banco dt { color: var(--texto-2); }
+.banco dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+.btn-copiar { margin-top: 12px; min-height: 44px; padding: 10px 18px; border-radius: 10px; border: 1px solid var(--borde-input); background: #FFFFFF; font-weight: 600; font-size: 15px; cursor: pointer; color: var(--texto); display: inline-flex; align-items: center; gap: 8px; }
+.btn-copiar:hover { border-color: #A9B2BF; }
+.btn-wa { margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 8px 16px; border-radius: 12px; background: var(--acento); color: #FFFFFF; font-weight: 700; font-size: 16px; text-decoration: none; text-align: center; }
+.btn-wa:hover { background: var(--acento-osc); color: #FFFFFF; }
+.card-conf-resumen h3 { margin: 0 0 14px; font-size: 18px; }
+.conf-totales { border-top: 1px solid var(--borde); margin-top: 14px; padding-top: 14px; display: flex; flex-direction: column; gap: 6px; font-size: 15px; }
+.conf-totales div { display: flex; justify-content: space-between; gap: 12px; color: var(--texto-2); }
+.conf-totales div:first-child { color: var(--texto); }
+.conf-totales div:first-child span:first-child { font-weight: 600; }
+.conf-totales div:first-child span:last-child { font-weight: 700; }
+.btn-volver { margin-top: 18px; min-height: 44px; padding: 0; border: none; background: none; color: var(--acento); font-weight: 600; font-size: 15px; cursor: pointer; }
+.btn-volver:hover { color: var(--acento-osc); }
+
+@media (max-width: 640px) {
+  .t-h1 { font-size: 34px; line-height: 1.12; }
+  .hero-m { padding: 28px 20px 12px; }
+  .solo-desk { display: none; }
+  .header-in { padding: 12px 16px; gap: 10px; flex-wrap: nowrap; }
+  .header-der { gap: 8px; flex-wrap: nowrap; }
+  .card, .card-conf { padding: 18px; }
+  .traslado { padding: 16px; }
+  .cal { padding: 10px; }
+  .resumen { position: static; }
+  .main-form { padding: 8px 16px 128px; }
+  .main-conf { padding: 8px 16px 48px; }
+  /* En celular, la pantalla de pago parte directo en "Completa tu reserva" (sin repetir el hero) */
+  body.confirmando .hero-m { display: none; }
+  body.confirmando .main-conf { padding-top: 20px; }
+  /* Los datos bancarios y los botones usan todo el ancho de la tarjeta (sin la sangría del número de paso) */
+  .conf-cuerpo > .banco, .conf-cuerpo > .btn-copiar, .conf-cuerpo > .btn-wa { margin-left: -42px; }
+  .banco { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
+  .banco dt { font-size: 13px; }
+  .banco dd { margin-bottom: 10px; }
+  .banco dd:last-child { margin-bottom: 0; }
+  .btn-wa { padding: 8px 12px; }
+  .barra-movil { display: flex; }
+  .equipo-fila { padding: 12px; }
+  .gpu { margin: 0 12px 12px; padding: 12px; }
+}
+@media (max-width: 480px) {
+  /* En pantallas angostas el pill de Instagram queda solo con el ícono para que el header no se parta en dos líneas */
+  .pill-ig { padding: 0; }
+  .pill-ig .ig-txt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="cont header-in">
+    <a class="marca" href="index.html" aria-label="SC Computer, inicio">
+      <span class="marca-logo">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"></path></svg>
+      </span>
+      <span class="marca-nombre">SC Computer</span>
+    </a>
+    <div class="header-der">
+      <a class="link-inicio" href="index.html">← Inicio</a>
+      <span class="header-zona solo-desk">La Cruz · Quillota · Región de Valparaíso</span>
+      <a class="pill-ig" id="link-instagram" href="https://www.instagram.com/sc._computer/" target="_blank" rel="noopener">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14171C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><path d="M17.5 6.5h.01"></path></svg>
+        <span class="ig-txt">@sc._computer</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<section class="cont hero-m">
+  <h1 class="t-h1">Agenda la mantención de tu PC, notebook o consola</h1>
+  <p class="hero-bajada">Limpieza interna y cambio de pasta térmica para computadores y consolas. Selecciona tus equipos, la fecha y la modalidad de entrega; la reserva se confirma por WhatsApp.</p>
+  <div class="chips">
+    <span class="chip">Computadores desde <span id="desde-comp"></span></span>
+    <span class="chip">Consolas desde <span id="desde-cons"></span></span>
+    <span class="chip">PS3 · PS4 · Xbox One · Series S · Series X</span>
+  </div>
+</section>
+
+<!-- Pantalla 1: formulario -->
+<main class="cont main-form" id="vista-form">
+
+  <div class="col-form">
+
+    <section class="card" aria-labelledby="t-equipos">
+      <h2 id="t-equipos">1. Selecciona tus equipos</h2>
+      <p class="card-bajada">Puedes incluir varios equipos en una misma reserva.</p>
+      <div class="grupos" id="equipos"></div>
+    </section>
+
+    <section class="card" aria-labelledby="t-fecha">
+      <h2 id="t-fecha">2. Fecha y hora</h2>
+      <p class="card-bajada">Lunes, sábados y domingos están siempre disponibles. Los días de martes a viernes se habilitan semana a semana y se publican cada domingo.</p>
+      <div class="aviso-info" id="aviso-costa" style="margin-bottom: 16px" hidden></div>
+      <div class="cal">
+        <div class="cal-cab">
+          <button type="button" class="cal-nav" id="mes-prev" data-accion="mes-prev" aria-label="Mes anterior">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14171C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg>
+          </button>
+          <div class="cal-mes" id="cal-mes" aria-live="polite"></div>
+          <button type="button" class="cal-nav" id="mes-next" data-accion="mes-next" aria-label="Mes siguiente">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14171C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+          </button>
+        </div>
+        <div class="cal-ini" aria-hidden="true">
+          <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="cal-leyenda" aria-hidden="true">
+          <span><i class="ley-disp"></i>Disponible</span>
+          <span><i class="ley-sel"></i>Seleccionado</span>
+          <span><i class="ley-no"></i>No disponible</span>
+        </div>
+      </div>
+      <div class="aviso-cotizar" id="aviso-sin-dias" style="margin-top: 12px" hidden>No hay horarios disponibles en este período. Escríbeme por WhatsApp para coordinar una fecha.</div>
+      <div class="horas-tit" id="horas-tit" hidden></div>
+      <div class="horas-ayuda" id="horas-ayuda" hidden>Selecciona un día disponible en el calendario para ver los horarios.</div>
+      <div class="horas" id="horas" role="group" aria-labelledby="horas-tit"></div>
+    </section>
+
+    <section class="card" aria-labelledby="t-traslado">
+      <h2 id="t-traslado">3. Retiro y entrega</h2>
+      <p class="card-bajada">Servicio de retiro y entrega a domicilio con tarifa fija según la comuna.</p>
+
+      <div class="sub-tit" id="t-retiro">Recepción del equipo</div>
+      <div class="opciones" id="op-retiro" role="group" aria-labelledby="t-retiro"></div>
+
+      <div class="sub-tit" id="t-entrega" style="margin-top: 20px">Devolución del equipo</div>
+      <div class="opciones" id="op-entrega" role="group" aria-labelledby="t-entrega"></div>
+
+      <div class="traslado" id="traslado" hidden>
+        <div class="sub-tit" id="t-comuna">Comuna</div>
+        <div class="comunas" id="comunas" role="group" aria-labelledby="t-comuna"></div>
+        <label class="label" for="direccion" style="margin-top: 16px">Dirección</label>
+        <input class="input" id="direccion" type="text" autocomplete="street-address" placeholder="Calle, número y referencia">
+        <p class="traslado-nota" id="traslado-nota"></p>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="t-contacto">
+      <h2 id="t-contacto" style="margin-bottom: 16px">4. Datos de contacto</h2>
+      <div class="campos">
+        <div>
+          <label class="label" for="nombre">Nombre</label>
+          <input class="input" id="nombre" type="text" autocomplete="name" placeholder="Tu nombre">
+        </div>
+        <div>
+          <label class="label" for="telefono">WhatsApp</label>
+          <input class="input" id="telefono" type="tel" inputmode="tel" autocomplete="tel" placeholder="+56 9 1234 5678">
+        </div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="t-comentarios">
+      <h2 id="t-comentarios">5. Comentarios <span class="opcional">(opcional)</span></h2>
+      <p class="card-bajada" style="margin-bottom: 12px">Indica cualquier detalle relevante sobre el equipo o su funcionamiento.</p>
+      <label class="sr-only" for="comentarios">Comentarios</label>
+      <textarea class="input" id="comentarios" rows="4" placeholder="Ej: el notebook se calienta mucho, la PS4 suena fuerte, quiero que revises la RAM…"></textarea>
+    </section>
+
+  </div>
+
+  <aside class="resumen" aria-labelledby="t-resumen">
+    <div class="card">
+      <h2 id="t-resumen">Resumen</h2>
+      <div id="resumen"></div>
+    </div>
+  </aside>
+
+</main>
+
+<div class="barra-movil" id="barra-movil">
+  <div class="barra-txt">
+    <div class="barra-label">Total estimado</div>
+    <div class="barra-total" id="barra-total"></div>
+    <div class="barra-falta" id="barra-falta" hidden></div>
+  </div>
+  <button type="button" class="btn-agendar" id="barra-btn" data-accion="agendar">Agendar</button>
+</div>
+
+<!-- Pantalla 2: confirmación y pago -->
+<main class="main-conf" id="vista-conf" hidden></main>
+
+<script src="config.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var C = CONFIG;
+  var D = C.disponibilidad;
+  var $ = function (id) { return document.getElementById(id); };
+  var clp = function (n) { return '$' + String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
+  var esc = function (s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  };
+  var pad = function (n) { return String(n).padStart(2, '0'); };
+
+  // ── Textos de fechas ────────────────────────────────────────
+  var DIA_KEYS  = ['dom', 'lun', 'mar', 'mie', 'jue', 'vie', 'sab'];
+  var DOW_CORTO = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+  var DOW_LARGO = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+  var DOW_PLURAL = ['domingos', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábados'];
+  var MESES     = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  var MES_CORTO = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+
+  var diaCostaIdx = Math.max(0, DIA_KEYS.indexOf(C.traslado.diaCosta));
+  var horaCosta = normHora(D.horaCosta);
+
+  // ── Íconos (SVG de trazo) ───────────────────────────────────
+  var svg = function (inner, size) {
+    return '<svg aria-hidden="true" width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="#14171C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + inner + '</svg>';
+  };
+  var ICONOS = {
+    torre:    svg('<rect x="6" y="2" width="12" height="20" rx="2"></rect><path d="M10 6h4M10 9h4"></path><circle cx="12" cy="16" r="2"></circle>', 24),
+    notebook: svg('<rect x="4" y="5" width="16" height="11" rx="1.5"></rect><path d="M2 19h20"></path>', 24),
+    monitor:  svg('<rect x="3" y="4" width="18" height="12" rx="1.5"></rect><path d="M9 20h6M12 16v4"></path>', 24),
+    control:  svg('<path d="M6 8h12a4 4 0 0 1 4 4v2a3 3 0 0 1-5.5 1.7L15 14H9l-1.5 1.7A3 3 0 0 1 2 14v-2a4 4 0 0 1 4-4z"></path><path d="M7 11v2M6 12h2M16 11h.01M18 13h.01"></path>', 24)
+  };
+  var IC_COPIAR = '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14171C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>';
+  var IC_WHATSAPP = '<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>';
+  var IC_CHECK = '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F7A3A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg>';
+
+  // ── Estado ──────────────────────────────────────────────────
+  var state = {
+    qty: {},            // { pc: 2, ps4: 1, ... }
+    gpu: 0,             // tarjetas de video (máx. = cantidad de PCs)
+    dia: null,          // 'AAAA-MM-DD'
+    hora: null,         // '15:00'
+    retiro: 'yo',       // 'yo' = entrega en La Cruz · 'dom' = retiro a domicilio
+    entrega: 'yo',      // 'yo' = retiro en La Cruz  · 'dom' = entrega a domicilio
+    comuna: null,
+    direccion: '',
+    nombre: '',
+    telefono: '',
+    comentarios: '',
+    mesOffset: 0,       // 0 = mes de mañana
+    confirmado: false
+  };
+
+  // ── Fechas ──────────────────────────────────────────────────
+  var hoy = new Date();
+  hoy = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate(), 12);
+  var masDias = function (d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n, 12); };
+  var fechaKey = function (d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+  var inicio = masDias(hoy, 1);                                   // se reserva desde mañana…
+  var fin = masDias(hoy, Math.max(1, D.diasVisibles || 60));      // …hasta hoy + diasVisibles
+  var maxOffset = (fin.getFullYear() - inicio.getFullYear()) * 12 + fin.getMonth() - inicio.getMonth();
+
+  function normHora(h) {
+    var m = String(h || '').trim().match(/^(\d{1,2}):(\d{2})$/);
+    return m ? pad(m[1]) + ':' + m[2] : '';
+  }
+  function normHoras(lista) {
+    var out = [];
+    (lista || []).forEach(function (h) {
+      var n = normHora(h);
+      if (n && out.indexOf(n) < 0) out.push(n);
+    });
+    return out.sort();
+  }
+
+  // Días con horas dentro del rango. soloCosta = retiro a domicilio en zona con día fijo.
+  var cacheDias = {};
+  function calcularDias(soloCosta) {
+    var k0 = soloCosta ? 'costa' : 'normal';
+    if (cacheDias[k0]) return cacheDias[k0];
+    var dias = {};
+    var bloqueadas = D.bloqueadas || [];
+    var extra = D.extra || {};
+    for (var d = inicio; d <= fin; d = masDias(d, 1)) {
+      var dow = d.getDay();
+      if (soloCosta && dow !== diaCostaIdx) continue;
+      var key = fechaKey(d);
+      var hs = bloqueadas.indexOf(key) >= 0 ? [] : normHoras(extra[key] || D.semanal[DIA_KEYS[dow]]);
+      if (soloCosta && hs.length && horaCosta && hs.indexOf(horaCosta) < 0) hs = normHoras(hs.concat(horaCosta));
+      if (hs.length) dias[key] = { key: key, fecha: d, horas: hs };
+    }
+    cacheDias[k0] = dias;
+    return dias;
+  }
+
+  // ── Cálculo del pedido ──────────────────────────────────────
+  function calcular() {
+    var s = state;
+    var qOf = function (id) { return s.qty[id] || 0; };
+    var nEquipos = C.equipos.reduce(function (a, e) { return a + qOf(e.id); }, 0);
+    var gpu = Math.min(s.gpu, qOf('pc'));
+
+    var traslado = s.retiro === 'dom' || s.entrega === 'dom';
+    var comuna = C.traslado.comunas.filter(function (c) { return c.id === s.comuna; })[0] || null;
+    var zona = comuna && comuna.zona ? C.traslado.zonas[comuna.zona] : null;
+    var cotizar = !!(traslado && comuna && !zona);
+    var tarifa = traslado && zona ? zona.tarifa : 0;                  // un solo cobro por pedido
+    var soloCosta = !!(s.retiro === 'dom' && zona && zona.diaFijo);
+
+    var dias = calcularDias(soloCosta);
+    var diaSel = s.dia && dias[s.dia] ? dias[s.dia] : null;           // si el día dejó de ser válido, cuenta como faltante
+    var horaValida = !!(diaSel && s.hora && diaSel.horas.indexOf(s.hora) >= 0);
+
+    var lineas = [];
+    var total = 0;
+    C.equipos.forEach(function (e) {
+      var q = qOf(e.id);
+      if (q > 0) {
+        lineas.push({ label: q + ' × ' + e.nombre, sub: clp(e.precio) + ' c/u', monto: clp(q * e.precio) });
+        total += q * e.precio;
+      }
+    });
+    if (gpu > 0) {
+      lineas.push({ label: gpu + ' × Tarjeta de video', sub: clp(C.precioGPU) + ' c/u · pasta + pads', monto: clp(gpu * C.precioGPU) });
+      total += gpu * C.precioGPU;
+    }
+    if (traslado && comuna) {
+      var quien = s.retiro === 'dom' && s.entrega === 'dom' ? 'Retiro y entrega' : (s.retiro === 'dom' ? 'Retiro' : 'Entrega');
+      lineas.push({ label: quien + ' a domicilio', sub: zona ? comuna.nombre : 'Comuna a cotizar', monto: cotizar ? 'A cotizar' : clp(tarifa) });
+      total += tarifa;
+    }
+
+    var fechaTxt = '';
+    if (diaSel) {
+      var f = diaSel.fecha;
+      fechaTxt = DOW_CORTO[f.getDay()] + ' ' + f.getDate() + ' ' + MES_CORTO[f.getMonth()] + (horaValida ? ', ' + s.hora : '');
+    }
+
+    var falta = [];
+    if (nEquipos === 0) falta.push('equipos');
+    if (!diaSel) falta.push('día');
+    if (!horaValida) falta.push('hora');
+    if (traslado && !comuna) falta.push('comuna');
+    if (traslado && !s.direccion.trim()) falta.push('dirección');
+    if (!s.nombre.trim()) falta.push('nombre');
+    if (!s.telefono.trim()) falta.push('WhatsApp');
+
+    var pagoTotal = C.pago.modo === 'total';
+    var pagar = pagoTotal ? total : Math.min(C.pago.abono, total);
+    var resto = Math.max(0, total - pagar);
+
+    return {
+      qOf: qOf, nEquipos: nEquipos, gpu: gpu,
+      traslado: traslado, comuna: comuna, zona: zona, cotizar: cotizar, tarifa: tarifa, soloCosta: soloCosta,
+      dias: dias, diaSel: diaSel, horaValida: horaValida,
+      lineas: lineas, total: total, fechaTxt: fechaTxt,
+      falta: falta, puedeAgendar: falta.length === 0,
+      pagoTotal: pagoTotal, pagar: pagar, resto: resto
+    };
+  }
+
+  // ── Render: 1. Equipos ──────────────────────────────────────
+  function contador(num, menos, mas, enMin, enMax) {
+    return '<div class="contador">' +
+      '<button type="button" class="btn-cnt" data-accion="' + menos.accion + '"' + (menos.id ? ' data-id="' + menos.id + '"' : '') + ' data-fk="' + menos.fk + '" aria-label="' + esc(menos.label) + '"' + (enMin ? ' aria-disabled="true"' : '') + '>−</button>' +
+      '<span class="cnt-num" aria-live="polite">' + num + '</span>' +
+      '<button type="button" class="btn-cnt mas" data-accion="' + mas.accion + '"' + (mas.id ? ' data-id="' + mas.id + '"' : '') + ' data-fk="' + mas.fk + '" aria-label="' + esc(mas.label) + '"' + (enMax ? ' aria-disabled="true"' : '') + '>+</button>' +
+      '</div>';
+  }
+  function renderEquipos(r) {
+    var max = C.maxPorEquipo || 9;
+    var grupos = [['comp', 'Computadores'], ['cons', 'Consolas']];
+    $('equipos').innerHTML = grupos.map(function (g) {
+      var items = C.equipos.filter(function (e) { return e.grupo === g[0]; });
+      if (!items.length) return '';
+      return '<div><div class="grupo-tit">' + g[1] + '</div><div class="equipos">' + items.map(function (e) {
+        var q = r.qOf(e.id);
+        var html = '<div class="equipo' + (q > 0 ? ' on' : '') + '"><div class="equipo-fila">' +
+          '<div class="equipo-ic">' + (ICONOS[e.icono] || ICONOS.torre) + '</div>' +
+          '<div class="equipo-txt"><div class="equipo-nombre">' + esc(e.nombre) + '</div>' +
+          '<div class="equipo-desc">' + esc(e.desc) + ' · <strong>' + clp(e.precio) + '</strong></div></div>' +
+          contador(q,
+            { accion: 'menos', id: e.id, fk: 'menos-' + e.id, label: 'Quitar uno: ' + e.nombre },
+            { accion: 'mas', id: e.id, fk: 'mas-' + e.id, label: 'Agregar uno: ' + e.nombre },
+            q <= 0, q >= max) +
+          '</div>';
+        if (e.id === 'pc' && q > 0) {
+          html += '<div class="gpu"><div class="gpu-txt">' +
+            '<div class="gpu-tit">Cambio de pasta térmica en tarjeta de video</div>' +
+            '<div class="gpu-desc">Incluye desarme de la GPU, pasta térmica nueva y revisión de pads térmicos · <strong>+' + clp(C.precioGPU) + ' por tarjeta</strong>.</div></div>' +
+            contador(r.gpu,
+              { accion: 'gpu-menos', fk: 'gpu-menos', label: 'Quitar una tarjeta de video' },
+              { accion: 'gpu-mas', fk: 'gpu-mas', label: 'Agregar una tarjeta de video' },
+              r.gpu <= 0, r.gpu >= q) +
+            '</div>';
+        }
+        return html + '</div>';
+      }).join('') + '</div></div>';
+    }).join('');
+  }
+
+  // ── Render: 2. Calendario y horas ───────────────────────────
+  function renderCalendario(r) {
+    var offset = Math.max(0, Math.min(maxOffset, state.mesOffset));
+    state.mesOffset = offset;
+    var primero = new Date(inicio.getFullYear(), inicio.getMonth() + offset, 1, 12);
+    var nombreMes = MESES[primero.getMonth()];
+    $('cal-mes').textContent = nombreMes.charAt(0).toUpperCase() + nombreMes.slice(1) + ' ' + primero.getFullYear();
+    $('mes-prev').disabled = offset <= 0;
+    $('mes-next').disabled = offset >= maxOffset;
+
+    var html = '';
+    var lead = (primero.getDay() + 6) % 7;                // la semana parte en lunes
+    for (var i = 0; i < lead; i++) html += '<span class="cal-vacia" aria-hidden="true"></span>';
+    var diasMes = new Date(primero.getFullYear(), primero.getMonth() + 1, 0).getDate();
+    for (var n = 1; n <= diasMes; n++) {
+      var d = new Date(primero.getFullYear(), primero.getMonth(), n, 12);
+      var key = fechaKey(d);
+      var nombre = DOW_LARGO[d.getDay()] + ' ' + n + ' de ' + MESES[d.getMonth()];
+      if (r.dias[key]) {
+        var on = state.dia === key;
+        html += '<button type="button" class="cal-dia' + (on ? ' on' : '') + '" data-accion="dia" data-id="' + key + '" data-fk="dia-' + key + '"' +
+          ' aria-pressed="' + on + '" aria-label="' + nombre + (on ? ', seleccionado' : ', disponible') + '">' + n + '</button>';
+      } else {
+        html += '<span class="cal-no' + (d < inicio ? ' pasado' : '') + '" role="img" aria-label="' + nombre + ', no disponible">' + n + '</span>';
+      }
+    }
+    $('cal-grid').innerHTML = html;
+
+    var sinDias = Object.keys(r.dias).length === 0;
+    $('aviso-sin-dias').hidden = !sinDias;
+
+    var aviso = $('aviso-costa');
+    aviso.hidden = !r.soloCosta;
+    if (r.soloCosta) {
+      aviso.textContent = 'Los retiros en Concón, Viña del Mar y Quilpué se realizan los ' + DOW_PLURAL[diaCostaIdx] +
+        (horaCosta ? ', con un horario adicional a las ' + horaCosta + '.' : '.');
+    }
+
+    var tit = $('horas-tit');
+    tit.hidden = !r.diaSel;
+    if (r.diaSel) {
+      var f = r.diaSel.fecha;
+      tit.textContent = 'Horarios para el ' + DOW_LARGO[f.getDay()] + ' ' + f.getDate() + ' de ' + MESES[f.getMonth()];
+    }
+    $('horas-ayuda').hidden = !!r.diaSel || sinDias;
+    $('horas').innerHTML = (r.diaSel ? r.diaSel.horas : []).map(function (h) {
+      var on = state.hora === h;
+      return '<button type="button" class="opcion hora' + (on ? ' on' : '') + '" data-accion="hora" data-id="' + h + '" data-fk="hora-' + h + '" aria-pressed="' + on + '">' + h + '</button>';
+    }).join('');
+  }
+
+  // ── Render: 3. Retiro y entrega ─────────────────────────────
+  var OP_RETIRO = [
+    { id: 'yo', nombre: 'Entrega en La Cruz', nota: 'Sin costo · la dirección se envía al confirmar' },
+    { id: 'dom', nombre: 'Retiro a domicilio', nota: 'El equipo se retira en tu dirección' }
+  ];
+  var OP_ENTREGA = [
+    { id: 'yo', nombre: 'Retiro en La Cruz', nota: 'Sin costo · se avisa cuando el equipo esté listo' },
+    { id: 'dom', nombre: 'Entrega a domicilio', nota: 'El equipo se entrega en tu dirección' }
+  ];
+  function opciones(lista, accion, actual) {
+    return lista.map(function (o) {
+      var on = actual === o.id;
+      return '<button type="button" class="opcion opcion-modo' + (on ? ' on' : '') + '" data-accion="' + accion + '" data-id="' + o.id + '" data-fk="' + accion + '-' + o.id + '" aria-pressed="' + on + '">' +
+        '<span class="opcion-nombre">' + o.nombre + '</span><span class="opcion-nota">' + o.nota + '</span></button>';
+    }).join('');
+  }
+  function renderTraslado(r) {
+    $('op-retiro').innerHTML = opciones(OP_RETIRO, 'retiro', state.retiro);
+    $('op-entrega').innerHTML = opciones(OP_ENTREGA, 'entrega', state.entrega);
+    $('traslado').hidden = !r.traslado;
+    $('comunas').innerHTML = C.traslado.comunas.map(function (c) {
+      var z = c.zona ? C.traslado.zonas[c.zona] : null;
+      var tarifa = z ? clp(z.tarifa) + (z.diaFijo ? ' · solo ' + DOW_LARGO[diaCostaIdx] : '') : 'A cotizar';
+      var on = state.comuna === c.id;
+      return '<button type="button" class="opcion comuna' + (on ? ' on' : '') + '" data-accion="comuna" data-id="' + c.id + '" data-fk="comuna-' + c.id + '" aria-pressed="' + on + '">' +
+        '<span class="comuna-nombre">' + esc(c.nombre) + '</span><span class="comuna-tarifa">' + tarifa + '</span></button>';
+    }).join('');
+  }
+
+  // ── Render: resumen y barra inferior ────────────────────────
+  function htmlLineas(lineas) {
+    return '<div class="lineas">' + lineas.map(function (l) {
+      return '<div class="linea"><div><div>' + esc(l.label) + '</div><div class="linea-sub">' + esc(l.sub) + '</div></div>' +
+        '<div class="linea-monto">' + l.monto + '</div></div>';
+    }).join('') + '</div>';
+  }
+  function renderResumen(r) {
+    var html = '';
+    if (!r.lineas.length) html += '<p class="resumen-vacio">Agrega un equipo para ver el total estimado.</p>';
+    html += htmlLineas(r.lineas);
+    html += '<div class="total"><span class="total-label">Total estimado</span><span class="total-monto">' + clp(r.total) + '</span></div>';
+    if (r.fechaTxt) html += '<div class="resumen-fecha">Fecha: <strong>' + r.fechaTxt + '</strong></div>';
+    if (r.cotizar) html += '<div class="aviso-cotizar">El costo de traslado a tu comuna se cotiza por WhatsApp.</div>';
+    html += '<button type="button" class="btn-agendar" data-accion="agendar" data-fk="agendar"' + (r.puedeAgendar ? '' : ' disabled') + '>Agendar</button>';
+    if (!r.puedeAgendar) html += '<div class="falta">Falta: ' + r.falta.join(', ') + '</div>';
+    html += '<p class="pago-nota">' + (r.pagoTotal
+      ? 'Al agendar se muestran los datos para transferir el total. La reserva se confirma al recibir el comprobante.'
+      : 'La reserva se confirma con un abono de ' + clp(Math.min(C.pago.abono, r.total || C.pago.abono)) + '. El saldo se paga al momento de la entrega.') + '</p>';
+    $('resumen').innerHTML = html;
+
+    $('barra-total').textContent = clp(r.total);
+    $('barra-btn').disabled = !r.puedeAgendar;
+    $('barra-falta').hidden = r.puedeAgendar;
+    $('barra-falta').textContent = r.puedeAgendar ? '' : 'Falta: ' + r.falta.join(', ');
+  }
+
+  // ── Mensaje de WhatsApp y datos de transferencia ────────────
+  function mensaje(r) {
+    var s = state;
+    var lineas = ['Hola, quiero agendar una mantención:'];
+    C.equipos.forEach(function (e) {
+      if (r.qOf(e.id) > 0) lineas.push('• ' + r.qOf(e.id) + ' × ' + e.nombre);
+    });
+    if (r.gpu > 0) lineas.push('• Cambio de pasta en ' + r.gpu + ' tarjeta(s) de video');
+    lineas.push('Fecha: ' + r.fechaTxt);
+    lineas.push('Recepción del equipo: ' + (s.retiro === 'dom' ? 'retiro a domicilio' : 'entrega en La Cruz'));
+    lineas.push('Devolución: ' + (s.entrega === 'dom' ? 'entrega a domicilio' : 'retiro en La Cruz'));
+    if (r.traslado) lineas.push('Dirección: ' + s.direccion.trim() + (r.comuna ? ', ' + r.comuna.nombre : ''));
+    lineas.push('Total estimado: ' + clp(r.total) + (r.cotizar ? ' + traslado a cotizar' : ''));
+    lineas.push((r.pagoTotal ? 'Transferí el total: ' : 'Transferí el abono: ') + clp(r.pagar) + ' (te adjunto el comprobante)');
+    lineas.push('Nombre: ' + s.nombre.trim() + ' · WhatsApp: ' + s.telefono.trim());
+    if (s.comentarios.trim()) lineas.push('Comentarios: ' + s.comentarios.trim());
+    return lineas.join('\n');
+  }
+  function datosBanco(r) {
+    var datos = Object.keys(C.pago.datos).map(function (k) { return [k, C.pago.datos[k]]; });
+    datos.push(['Monto', clp(r.pagar)]);
+    return datos;
+  }
+
+  // ── Render: pantalla de confirmación ────────────────────────
+  function renderConfirmacion(r) {
+    var waLink = 'https://wa.me/' + String(C.whatsapp).replace(/\D/g, '') + '?text=' + encodeURIComponent(mensaje(r));
+    $('vista-conf').innerHTML =
+      '<section class="card card-conf" aria-labelledby="t-conf">' +
+        '<div class="conf-cab"><div class="conf-check">' + IC_CHECK + '</div><h2 id="t-conf" tabindex="-1">Completa tu reserva</h2></div>' +
+        '<p class="conf-bajada">Tu hora para el <strong>' + r.fechaTxt + '</strong> quedará confirmada al recibir el comprobante de transferencia.</p>' +
+        '<div class="conf-paso"><div class="conf-num" aria-hidden="true">1</div><div class="conf-cuerpo">' +
+          '<h3 class="conf-tit">Transfiere ' + clp(r.pagar) + '</h3>' +
+          '<div class="conf-sub">' + (r.pagoTotal ? 'Total del servicio' : 'Abono de reserva · saldo de ' + clp(r.resto) + ' al momento de la entrega') + '</div>' +
+          '<dl class="banco">' + datosBanco(r).map(function (d) { return '<dt>' + esc(d[0]) + '</dt><dd>' + esc(d[1]) + '</dd>'; }).join('') + '</dl>' +
+          '<button type="button" class="btn-copiar" data-accion="copiar">' + IC_COPIAR + '<span id="copiar-label" aria-live="polite">Copiar datos de transferencia</span></button>' +
+        '</div></div>' +
+        '<div class="conf-paso"><div class="conf-num" aria-hidden="true">2</div><div class="conf-cuerpo">' +
+          '<h3 class="conf-tit">Envía tu pedido y el comprobante</h3>' +
+          '<div class="conf-sub">Se abrirá WhatsApp con el detalle de tu pedido. Adjunta el comprobante de transferencia y envía el mensaje.</div>' +
+          '<a class="btn-wa" href="' + esc(waLink) + '" target="_blank" rel="noopener">' + IC_WHATSAPP + 'Enviar pedido y comprobante</a>' +
+        '</div></div>' +
+      '</section>' +
+      '<section class="card card-conf-resumen" aria-labelledby="t-conf-resumen">' +
+        '<h3 id="t-conf-resumen">Resumen del pedido</h3>' +
+        htmlLineas(r.lineas) +
+        '<div class="conf-totales">' +
+          '<div><span>Total</span><span>' + clp(r.total) + (r.cotizar ? ' + traslado a cotizar' : '') + '</span></div>' +
+          '<div><span>' + (r.pagoTotal ? 'Pago' : 'Abono') + '</span><span>' + clp(r.pagar) + '</span></div>' +
+          '<div><span>Saldo a la entrega</span><span>' + clp(r.resto) + '</span></div>' +
+        '</div>' +
+        '<button type="button" class="btn-volver" data-accion="volver">← Modificar pedido</button>' +
+      '</section>';
+  }
+
+  // ── Render general ──────────────────────────────────────────
+  function render() {
+    var activo = document.activeElement;
+    var fk = activo && activo.dataset ? activo.dataset.fk : null;
+    var r = calcular();
+
+    $('vista-form').hidden = state.confirmado;
+    $('barra-movil').hidden = state.confirmado;
+    $('vista-conf').hidden = !state.confirmado;
+    document.body.classList.toggle('confirmando', state.confirmado);
+
+    renderEquipos(r);
+    renderCalendario(r);
+    renderTraslado(r);
+    renderResumen(r);
+
+    // Al redibujar se pierde el foco del botón apretado: se devuelve al mismo control
+    if (fk && !state.confirmado) {
+      var el = document.querySelector('[data-fk="' + fk + '"]');
+      if (el && el !== document.activeElement && !el.disabled) {
+        try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); }
+      }
+    }
+    return r;
+  }
+
+  // ── Acciones ────────────────────────────────────────────────
+  function cambiarQty(id, delta) {
+    var max = C.maxPorEquipo || 9;
+    state.qty[id] = Math.max(0, Math.min(max, (state.qty[id] || 0) + delta));
+    if (id === 'pc' && state.gpu > state.qty.pc) state.gpu = state.qty.pc;   // si bajan los PCs, se ajusta
+  }
+  function elegirDia(key) {
+    var r = calcular();
+    var dia = r.dias[key];
+    if (!dia) return;
+    state.dia = key;
+    if (dia.horas.indexOf(state.hora) < 0) state.hora = null;                // la hora no existe en el nuevo día
+  }
+  function copiarConTextarea(texto) {
+    var ta = document.createElement('textarea');
+    ta.value = texto;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+    return ok;
+  }
+  function copiarDatos() {
+    var texto = datosBanco(calcular()).map(function (d) { return d[0] + ': ' + d[1]; }).join('\n');
+    var listo = function () {
+      var label = $('copiar-label');
+      if (label) label.textContent = 'Datos copiados';
+    };
+    var respaldo = function () { if (copiarConTextarea(texto)) listo(); };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(texto).then(listo, respaldo);
+        return;
+      }
+    } catch (e) {}
+    try { respaldo(); } catch (e) {}
+  }
+  function irArriba() {
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+
+  document.addEventListener('click', function (ev) {
+    var el = ev.target.closest ? ev.target.closest('[data-accion]') : null;
+    if (!el || el.disabled) return;
+    var id = el.dataset.id;
+    switch (el.dataset.accion) {
+      case 'mas':       cambiarQty(id, 1); break;
+      case 'menos':     cambiarQty(id, -1); break;
+      case 'gpu-mas':   state.gpu = Math.min(state.qty.pc || 0, state.gpu + 1); break;
+      case 'gpu-menos': state.gpu = Math.max(0, state.gpu - 1); break;
+      case 'mes-prev':  state.mesOffset = Math.max(0, state.mesOffset - 1); break;
+      case 'mes-next':  state.mesOffset = Math.min(maxOffset, state.mesOffset + 1); break;
+      case 'dia':       elegirDia(id); break;
+      case 'hora':      state.hora = id; break;
+      case 'retiro':    state.retiro = id; break;
+      case 'entrega':   state.entrega = id; break;
+      case 'comuna':    state.comuna = id; break;
+      case 'copiar':    copiarDatos(); return;
+      case 'agendar': {
+        var r = calcular();
+        if (!r.puedeAgendar) return;
+        state.confirmado = true;
+        renderConfirmacion(r);
+        render();
+        irArriba();
+        var tit = $('t-conf');
+        if (tit) { try { tit.focus({ preventScroll: true }); } catch (e) {} }
+        return;
+      }
+      case 'volver':
+        state.confirmado = false;
+        render();
+        irArriba();
+        return;
+      default: return;
+    }
+    render();
+  });
+
+  // Campos de texto: no se redibujan, solo actualizan el estado y el resumen
+  ['direccion', 'nombre', 'telefono', 'comentarios'].forEach(function (campo) {
+    var el = $(campo);
+    state[campo] = el.value || '';        // conserva lo que el navegador haya restaurado al recargar
+    el.addEventListener('input', function () {
+      state[campo] = el.value;
+      renderResumen(calcular());
+    });
+  });
+
+  // ── Inicio ──────────────────────────────────────────────────
+  var minDe = function (g) {
+    return Math.min.apply(null, C.equipos.filter(function (e) { return e.grupo === g; }).map(function (e) { return e.precio; }));
+  };
+  $('desde-comp').textContent = clp(minDe('comp'));
+  $('desde-cons').textContent = clp(minDe('cons'));
+  $('link-instagram').href = C.instagram;
+  $('traslado-nota').textContent = 'La tarifa se cobra una sola vez por reserva e incluye retiro y entrega. En Concón, Viña del Mar y Quilpué el servicio a domicilio se realiza los ' + DOW_PLURAL[diaCostaIdx] + '.';
+  render();
+})();
+</script>
+</body>
+</html>
