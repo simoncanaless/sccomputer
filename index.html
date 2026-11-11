@@ -3,12 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SC Computer — Mantención de PC, notebooks y consolas</title>
-<meta name="description" content="Mantención preventiva de computadores y consolas en La Cruz, Quillota, Viña del Mar, Concón y Quilpué: limpieza interna profunda y cambio de pasta térmica, con retiro y entrega a domicilio.">
+<title>Mantención de PC, notebooks y consolas en Quillota y La Cruz | SC Computer</title>
+<meta name="description" content="Limpieza interna y cambio de pasta térmica para PC, notebooks, PS4 y Xbox, con retiro a domicilio en La Cruz, Quillota, Viña del Mar, Concón y Quilpué.">
 <meta name="theme-color" content="#1E4FD8">
+<link rel="canonical" href="https://sccomputer.cl/">
+<!-- Vista previa al compartir el link (WhatsApp, Instagram) -->
+<meta property="og:url" content="https://sccomputer.cl/">
+<meta property="og:image" content="https://sccomputer.cl/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SC Computer">
+<meta property="og:locale" content="es_CL">
+<meta property="og:title" content="SC Computer — Mantención de PC, notebooks y consolas">
+<meta property="og:description" content="Limpieza interna y cambio de pasta térmica, con retiro y entrega a domicilio en La Cruz, Quillota, Viña del Mar, Concón y Quilpué. Agenda en línea.">
+<meta name="twitter:card" content="summary_large_image">
 <!-- config.js va en el head para que los precios ya estén al pintar la página (sin saltos de contenido) -->
 <script src="config.js"></script>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='10' fill='%231E4FD8'/%3E%3Cg transform='translate(8 8) scale(.8333)' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='16' height='16' rx='2'/%3E%3Crect x='9' y='9' width='6' height='6'/%3E%3Cpath d='M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
@@ -444,6 +458,41 @@ svg { flex: none; }
   document.querySelectorAll('[data-instagram]').forEach(function (a) { a.href = C.instagram; });
   document.getElementById('link-whatsapp').href = 'https://wa.me/' + String(C.whatsapp).replace(/\D/g, '') +
     '?text=' + encodeURIComponent('Hola, tengo una consulta sobre el servicio de mantención');
+
+  // Datos estructurados para Google (negocio local). Se arman desde CONFIG para no duplicar
+  // precios ni comunas. No incluyen la dirección: solo la comuna y las zonas que se atienden.
+  var base = location.origin + location.pathname.replace(/[^\/]*$/, '');
+  var ld = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: 'SC Computer',
+    description: document.querySelector('meta[name="description"]').content,
+    url: base,
+    image: base + 'og-image.png',
+    logo: base + 'favicon.png',
+    telephone: '+' + String(C.whatsapp).replace(/\D/g, ''),
+    priceRange: clp(Math.min.apply(null, precios)) + ' - ' + clp(Math.max.apply(null, precios)),
+    currenciesAccepted: 'CLP',
+    address: { '@type': 'PostalAddress', addressLocality: 'La Cruz', addressRegion: 'Valparaíso', addressCountry: 'CL' },
+    areaServed: C.traslado.comunas.filter(function (c) { return c.zona; })
+      .map(function (c) { return { '@type': 'City', name: c.nombre }; }),
+    sameAs: [C.instagram],
+    potentialAction: { '@type': 'ReserveAction', target: base + 'agendar.html' },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Mantención de computadores y consolas',
+      itemListElement: C.equipos.map(function (e) {
+        return {
+          '@type': 'Offer', price: e.precio, priceCurrency: 'CLP',
+          itemOffered: { '@type': 'Service', name: 'Mantención de ' + e.nombre, description: e.desc }
+        };
+      })
+    }
+  };
+  var tag = document.createElement('script');
+  tag.type = 'application/ld+json';
+  tag.textContent = JSON.stringify(ld);
+  document.head.appendChild(tag);
 })();
 </script>
 </body>
